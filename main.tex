@@ -17,6 +17,9 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{hyperref}
+\usepackage{titlesec}
+
+\newcommand{\sectionbreak}{\clearpage}
 
 \begin{document}
 \maketitle
@@ -24,12 +27,11 @@
 	 	 	 	 	
 	
 \section*{Sammanfattning}
-Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka säkerhetsåtgärder man bör ta själv.	
-erlangs VM är en stabil och flertrådad VM men har inte designats med säkerhet i åtanke 
-Erlang VM innehåller specifika säkerhetshål som går att täta till
+Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka säkerhetsåtgärder man bör ta själv. 
+Erlangs VM är en stabil och flertrådad VM men har inte designats med säkerhet i åtanke, Erlang VM innehåller specifika säkerhetshål som går att täta till.
 Erlang och Elixir är lika säkra och stabiliteten gör dem även säkrare
 	
-\section*{Nyckelord}
+\subsection*{Nyckelord}
 informationsflödeskontroll, erlang, elixir, säkerhet, webramverk
 	\section{Inledning}
 
@@ -73,7 +75,7 @@ i en spalten som tar upp just detta ämne. Samtliga fyra inlägg i kolumnen var 
 \subsection*{Ramverken}
 yaws är egentligen en statisk webserver med stöd för dynamiska sidor mer än ett ramverk, och då bör man tänka på samma saker som med webserverna Apache HTTPD eller nginx i kombination språket php som att konfigurera vilka sidor och platser som får besökas och vilka platser som kräver behörighet \cite{yaws}. cowboy är mera likt en applikations server som node.js eller tomcat, som är designad med kod exekvering i åtanke, och en helt dynamisk applikation där allt generas med kod, och då bör man tänka mer på vilka variabler man tar in och kontrollera dem så att de inte innehåller skadlig kod \cite{cowboy}. phoenix är ett helhets webramverk likt ruby on rails där man vid start får en färdig web applikation och skriver kod och lägger på externa paket\footnote{Med paket så menas t.ex. \url{https://hex.pm/packages/cowboy}.
 eller \url{https://hex.pm/packages/bcrypt}}/ med kod för att ändra web applikationen till att uppfylla målen, då behöver man tänka på att inte lägga till gamla paket eller att skriva kod som öppnar säkerhets hål \cite{phoenix/ruby,phoenix/rails,phoenix}.
-\subsection*{Erlang VM\footnote{Erlang VM, Erlang BEAM virtuella maskin , kompilerar och kör erlang eller elixir kod\cite{erlang}.}}
+\subsection*{Erlang VM\footnote{Erlang VM, Erlang BEAM virtuella maskin, kompilerar och kör erlang/elixir kod\cite{erlang}.}}
 	Erlang är snabbt och enkelt att skala up så man kan utnyttja andra säkerhetslösningar som skulle ta för lång tid i de vanligaste objektorienterade språk  så som att ta emot hela block från databasen och söka igenom dem i så nära slutanvändaren, för att bibehålla vad användare söker efter och då eliminera möjligheten att analysera fram användarens syfte och kanske identitet\cite{database}. eftersom erlang är så snabbt och skalbart så kan de klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distruberad förnekade av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre\cite{resource-safe}
 \subsection*{Allmänt}
 	man bör alltid tänka på samma saker som vid objektorienterad server utveckling, så som Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards \cite{owasp}.
@@ -103,15 +105,14 @@ Bra för databaser - Erlang är bra då man ska implementera säkra databaser f�
 \section{	Analys och diskussion}
 
 
-i vår åsikt så är erlang säkrare mot dagens hot. om man tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om man får åtkomst till en Erlang VM nod så får man tillgång till alla noder i applikationen, och detta skulle kunna göras igenom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk. för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
-
+I vår åsikt så är erlang säkrare mot dagens hot. Om man tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om man får åtkomst till en Erlang VM nod så får man tillgång till alla noder i applikationen, och detta skulle kunna göras igenom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk. för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
+Erlang webservern YAWS har olika tillexempel haft säkerhetsbrister som har gått att utnyttja \cite{exploit} 
 	
 \section{Slutsatser}
 
 
-Erlang och Elixir ramverken är lika säkra som deras motsvarigheter, det är upp till utvecklaren att täppa till samma håll med samma principer\cite{exploit}
+Erlang och Elixir ramverken är lika säkra som deras motsvarigheter, det är upp till utvecklaren att täppa till samma håll med samma principer
 	
-  
 \begin{thebibliography}{99}
 
 	
@@ -168,6 +169,7 @@ hämtad 2016-03-06
 hämtad 2016-03-06
 
 \end{thebibliography}
+
 
 
 \end{document}
