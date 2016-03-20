@@ -27,16 +27,17 @@
 	 	 	 	 	
 	
 \section*{Sammanfattning}
-Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka säkerhetsåtgärder man bör ta själv. 
+Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka egna säkerhetsåtgärder som bör vidtas. 
 Erlangs VM är en stabil och flertrådad VM men har inte designats med säkerhet i åtanke, Erlang VM innehåller specifika säkerhetshål som går att täta till.
-Erlang och Elixir är lika säkra och stabiliteten gör dem även säkrare
+Undersökningen resulterade i insikten att Erlang och Elixir är lika säkra och att även stabiliteten gör dem säkrare.
 	
 \subsection*{Nyckelord}
 informationsflödeskontroll, erlang, elixir, säkerhet, webramverk
-	\section{Inledning}
+	
+\section{Inledning}
 
-Frågeställningen var: hur mycket säkerhet är implementerad i de olika webbramverken\footnote{fördefinerad kombination med externa paket skrivna att passa med varandra som slutligen underlättar för utvecklare av webapplikationer} för elixir/erlang\footnote{språket Erlang/OTP\cite{erlang}}\footnote{dialekten av Erlang\cite{elixir}} och vilka säkerhetsåtgärder man bör vidta själv. 
-Detta är viktigt med hänseende på all känslig information man delger då man använder sig av webbtjänster.\\
+Frågeställningen var: hur mycket säkerhet är implementerad i de olika webbramverken\footnote{fördefinerad kombination med externa paket skrivna att passa med varandra som slutligen underlättar för utvecklare av webapplikationer} för elixir/erlang\footnote{språket Erlang/OTP\cite{erlang}}\footnote{dialekten av Erlang\cite{elixir}} och vilka säkerhetsåtgärder som bör vidtas. 
+Detta är viktigt med hänseende på all känslig information som delges då en använder webbtjänster.\\
 
 
 
@@ -67,7 +68,7 @@ litteraturstudier och källorna har funnits
  via databaserna IEEE Xplore 
  (ieeexplore.ieee.org), 
  som analyserat olika rapporter och 
-blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter man behöver ta hänsyn till. för att rapporten ska hålla sig 
+blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter som behövs ta hänsyn till. för att rapporten ska hålla sig 
 saklig är endast ramverken yaws\footnote{web servern Yet Another WebServer\cite{yawsorg}} och cowboy\footnote{ramverket Cowboy\cite{cowboyorg}} i erlang och phoenix\footnote{webramverket phoenix\cite{phoenixorg}} i elixir analyserade. då inga rapporter gick att hitta rörande elixir så har blogginlägg använts där författarna bedöms som opartiska till fakta. Vid eftersökning av källor att koppla till denna rapport hänvisades det till fyra inlägg 
 i en spalten som tar upp just detta ämne. Samtliga fyra inlägg i kolumnen var dock skrivna av Steve Vinoski i spalten The Functional Web och på grund av att författaren utvecklar yaws så blir han partisk och hans allmäna påverkan på vad som återgivits i kolumnen kan ses som missvisande eller partisk och har därför inte innefattats i denna rapport.
 
@@ -105,8 +106,8 @@ Bra för databaser - Erlang är bra då man ska implementera säkra databaser f�
 \section{	Analys och diskussion}
 
 
-I vår åsikt så är erlang säkrare mot dagens hot. Om man tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om man får åtkomst till en Erlang VM nod så får man tillgång till alla noder i applikationen, och detta skulle kunna göras igenom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk. för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
-Erlang webservern YAWS har olika tillexempel haft säkerhetsbrister som har gått att utnyttja \cite{exploit} 
+I vår åsikt så är erlang säkrare mot dagens hot. Om en tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om en attackerar får åtkomst till en Erlang VM nod så får attackeraren tillgång till alla noder i applikationen. Detta går att skydda genom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk. för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
+Erlang webservern YAWS har, som alla ramverk, haft säkerhetsbrister som har gått att utnyttja \cite{exploit} 
 	
 \section{Slutsatser}
 
@@ -115,22 +116,25 @@ Erlang och Elixir ramverken är lika säkra som deras motsvarigheter, det är up
 	
 \begin{thebibliography}{99}
 
-	
+	\bibitem{erlang}"Erlang" \url{http://www.erlang.org}
+hämtad 2016-03-06
+
+\bibitem{elixir}"Elixir" \url{http://elixir-lang.org}
+hämtad 2016-03-06
+
 \bibitem{IFC} CBCU Eastern Cancer Registry National Health Service, Computer Laboratory University of Cambridge, Department of Computing Imperial College London, {\em “Enforcing User Privacy in Web Applications using Erlang”}, \url{http://w2spconf.com/2010/papers/p09.pdf} Publicerad 2010-05-01. Hämtad 2016-03-02.
 
 \bibitem{101} {\em Erlang Security 101} by E D Williams, An NCC Group Publication
 
-\bibitem{resource-safe}David Teller Fac. des Sci., Lab. d''Inf. Fondamentale d''Orleans, Univ. d''Orleans, Bourges {\em “Towards a resource-safe Erlang”} ISBN 978-0-9785699-1-4
-Publicerad 2007-05-25, Hämtad 2016-03-06			
+
+\bibitem{resource-safe}David Teller Fac. des Sci., Lab. d''Inf. Fondamentale d''Orleans, Univ. d''Orleans, Bourges {\em “Towards a resource-safe Erlang”} ISBN 978-0-9785699-1-4 Publicerad 2007-05-25, Hämtad 2016-03-06			
 					
-\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.tu-berlin.de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.kammuller@gmail.com, {\em “Enhancing Privacy Implementations of Database Enquiries”}, ISBN 978-1-4244-3839-6
-Publicerad 2009-05-24, Hämtad 2016-03-06
+\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.tu-berlin.de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.kammuller@gmail.com, {\em “Enhancing Privacy Implementations of Database Enquiries”}, ISBN 978-1-4244-3839-6 Publicerad 2009-05-24, Hämtad 2016-03-06
 
 
 \bibitem{yaws} {\em “Building Web Applications with Erlang by Zachary Kessin (O’Reilly)”}. Copyright 2012 Zachary Kessin, 978-1-449-30996-1.
 \url{https://www.safaribooksonline.com/u/001o000000lifiuAAA/}
 
-%not using
 \bibitem{phoenix/rails} Szymon Boniecki "Elixir blog in 15 minutes using Phoenix framework" \url{http://codetunes.com/2015/phoenix-blog/}, Jakub Cieślar, publicerad 2015-08-13,
 hämtad 2016-03-06
 
@@ -145,27 +149,25 @@ hämtad 2016-03-06
 publicerad  2015-04-19,
 hämtad 2016-03-06
 
+
+
+\bibitem{cowboyorg}ninenines "Cowboy" \url{https://github.com/ninenines/cowboy}
+hämtad 2016-03-06
+
+
+
+\bibitem{phoenixorg}  "Phoenix Framework" \url{http://www.phoenixframework.org}
+hämtad 2016-03-06
+
+\bibitem{yawsorg} Claes Wikstrom "Yaws" \url{http://yaws.hyber.org}
+hämtad 2016-03-06
+
 \bibitem{exploit} Michael Brooks "Yaws-Wiki 1.88-1 (Erlang) Stored and Reflective XSS Vulnerabilities"  \url{https://www.exploit-db.com/exploits/17111/}
 publicerad 2011-04-04,
 hämtad 2016-03-06
 
 \bibitem{owasp} OWASP "OWASP Top 10" \url{https://www.owasp.org/index.php/Top10#OWASP_Top_10_for_2013}
 publicerad 2013-06-12,
-hämtad 2016-03-06
-
-\bibitem{cowboyorg}ninenines "Cowboy" \url{https://github.com/ninenines/cowboy}
-hämtad 2016-03-06
-
-\bibitem{erlang}"Erlang" \url{http://www.erlang.org}
-hämtad 2016-03-06
-
-\bibitem{elixir}"Elixir" \url{http://elixir-lang.org}
-hämtad 2016-03-06
-
-\bibitem{phoenixorg}  "Phoenix Framework" \url{http://www.phoenixframework.org}
-hämtad 2016-03-06
-
-\bibitem{yawsorg} Claes Wikstrom "Yaws" \url{http://yaws.hyber.org}
 hämtad 2016-03-06
 
 \end{thebibliography}
