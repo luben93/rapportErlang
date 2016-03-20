@@ -27,7 +27,8 @@
 	 	 	 	 	
 	
 \section*{Sammanfattning}
-Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka egna säkerhetsåtgärder som bör vidtas. 
+Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka egna säkerhetsåtgärder som bör vidtas.
+
 Erlangs VM är en stabil och flertrådad VM men har inte designats med säkerhet i åtanke, Erlang VM innehåller specifika säkerhetshål som går att täta till.
 Undersökningen resulterade i insikten att Erlang och Elixir är lika säkra och att även stabiliteten gör dem säkrare.
 	
@@ -36,26 +37,42 @@ informationsflödeskontroll, erlang, elixir, säkerhet, webramverk
 	
 \section{Inledning}
 
-Frågeställningen var: hur mycket säkerhet är implementerad i de olika webbramverken\footnote{fördefinerad kombination med externa paket skrivna att passa med varandra som slutligen underlättar för utvecklare av webapplikationer} för elixir/erlang\footnote{språket Erlang/OTP\cite{erlang}}\footnote{dialekten av Erlang\cite{elixir}} och vilka säkerhetsåtgärder som bör vidtas. 
-Detta är viktigt med hänseende på all känslig information som delges då en använder webbtjänster.\\
+Frågeställningen var hur mycket säkerhet som är implementerad i de olika webbramverken\footnote{fördefinerad kombination med externa paket skrivna att passa med varandra som slutligen underlättar för utvecklare av webapplikationer} för elixir/erlang\footnote{språket Erlang/OTP\cite{erlang}}\footnote{dialekten av Erlang\cite{elixir}} och vilka säkerhetsåtgärder som bör vidtas.
+
+Detta är viktigt med hänseende på all känslig information som delges då man använder sig av webbtjänster.\\
 
 
 
  \section{Bakgrund och teori}
 
 
-Sociala medier på webben hanterar personlig data från ett stort antal aktiva användare. Dessa webbapplikationer måste följa en mängd olika krav på integritet, och samtidigt uppnå skalabilitet och hög prestanda. Att implementera begränsningar på flödet av data under användningen av dessa tjänster för att följa en viss integritetspolicy är en utmaning eftersom enskilda komponenter bearbetar data som tillhör många olika användare. I en simpel blogg där flera användare skriver till en och samma anonyma diskussionstråd, kan det vara lämpligt att hindra var och en från att se den andres identitet. I de bästa av världar, borde alla webbapplikationer implementera integritetspolicys genom att isolera data som tillhör olika användare. \cite{IFC}	
-\\
-Forskning om IFC\footnote{Med IFC så menas Information Flow Control eller informationsflödeskontroll} har visat att en möjlig lösning är att kontrollera spridningen av data genom ett system. Med IFC spårar systemet alla spår av datat i komponenterna och hindrar oönskade dataflöden som skulle kunna skada integriteten. Detta ger två problem. Dels ger det mycket overhead och dels blir det svårt att förverkliga. Detta förhindrar IFC:n från att garantera datats isolering eftersom data som tillhör olika användare är blandat inom komponenten \cite{IFC}. 
-\\
-IFC:s restriktioner måste enbart bli kontrollerade då meddelanden skickas mellan processer i Erlang. \cite{IFC}
+Sociala medier på webben hanterar personlig data från ett stort antal aktiva användare.
+Dessa webbapplikationer måste följa en mängd olika krav på integritet, och samtidigt uppnå skalabilitet och hög prestanda.
+Att implementera begränsningar på flödet av data under användningen av dessa tjänster för att följa en viss integritetspolicy är en utmaning eftersom enskilda komponenter bearbetar data som tillhör många olika användare.
+I en simpel blogg där flera användare skriver till en och samma anonyma diskussionstråd, kan det vara lämpligt att hindra var och en från att se den andres identitet.
+I de bästa av världar, borde alla webbapplikationer implementera integritetspolicys genom att isolera data som tillhör olika användare.\\
+
+%\footnote{sid 1\cite{IFC}}
+
+Forskning om IFC\footnote{Med IFC så menas Information Flow Control eller informationsflödeskontroll} har visat att en möjlig lösning är att kontrollera spridningen av data genom ett system.
+Med IFC spårar systemet alla spår av datat i komponenterna och hindrar oönskade dataflöden som skulle kunna skada integriteten.
+Detta ger två problem.
+Dels ger det mycket overhead och dels blir det svårt att förverkliga.
+Detta förhindrar IFC:n från att garantera datats isolering eftersom data som tillhör olika användare är blandat inom komponenten.
+%\footnote{sid 1\cite{IFC}}
+IFC:s restriktioner måste enbart bli kontrollerade då meddelanden skickas mellan processer i Erlang.
+ \footnote{sid 1\cite{IFC}}
 \\
 Med integritet inom en blogg menas:
-Meddelanden från en viss utgivare ska enbart tas emot av prenumeranter som denna har godkänt. Detta försäkrar att utgivaren kan bibehålla kontrollen över vilka som tar emot meddelandena.
-Godkända prenumeranter ska inte bli exponerade inför någon annan utgivare eller prenumerant. Detta innebär att varje prenumeration görs privat och att ingen annan användare av systemet, förutom den utgivare som godkänner prenumeranten, kan se vem som prenumererar.
-Förfrågningar om prenumeration från eventuella prenumeranter ska enbart leveras till den utgivare som förfrågningen riktar sig till. \cite{IFC}
+Meddelanden från en viss utgivare ska enbart tas emot av prenumeranter som denna har godkänt.
+Detta försäkrar att utgivaren kan bibehålla kontrollen över vilka som tar emot meddelandena.
+Godkända prenumeranter ska inte bli exponerade inför någon annan utgivare eller prenumerant.
+Detta innebär att varje prenumeration görs privat och att ingen annan användare av systemet, förutom den utgivare som godkänner prenumeranten, kan se vem som prenumererar.
+Förfrågningar om prenumeration från eventuella prenumeranter ska enbart leveras till den utgivare som förfrågningen riktar sig till.
+\footnote{sid 2\cite{IFC}}
 \\
-Varför Erlang? Erlang är ett procedurellt programmeringsspråk vars modell bygger på att ingen data delas mellan processer, vilket i sin tur gör att den passar för IFC. \cite{IFC}
+Varför Erlang? Erlang är ett procedurellt programmeringsspråk vars modell bygger på att ingen data delas mellan processer, vilket i sin tur gör att den passar för IFC.
+\footnote{ sid 3\cite{IFC}}
 
 
 
@@ -63,50 +80,60 @@ Varför Erlang? Erlang är ett procedurellt programmeringsspråk vars modell byg
 \section{Metod och 	resultat }	
 
 \subsection{ Metod}
-Den valda metoden har varit 
-litteraturstudier och källorna har funnits
- via databaserna IEEE Xplore 
- (ieeexplore.ieee.org), 
- som analyserat olika rapporter och 
-blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter som behövs ta hänsyn till. för att rapporten ska hålla sig 
-saklig är endast ramverken yaws\footnote{web servern Yet Another WebServer\cite{yawsorg}} och cowboy\footnote{ramverket Cowboy\cite{cowboyorg}} i erlang och phoenix\footnote{webramverket phoenix\cite{phoenixorg}} i elixir analyserade. då inga rapporter gick att hitta rörande elixir så har blogginlägg använts där författarna bedöms som opartiska till fakta. Vid eftersökning av källor att koppla till denna rapport hänvisades det till fyra inlägg 
-i en spalten som tar upp just detta ämne. Samtliga fyra inlägg i kolumnen var dock skrivna av Steve Vinoski i spalten The Functional Web och på grund av att författaren utvecklar yaws så blir han partisk och hans allmäna påverkan på vad som återgivits i kolumnen kan ses som missvisande eller partisk och har därför inte innefattats i denna rapport.
+Den valda metoden har varit litteraturstudier och källorna har funnits via databaserna IEEE Xplore  (ieeexplore.ieee.org),  som analyserat olika rapporter och blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter som behövs ta hänsyn till.
+för att rapporten ska hålla sig saklig är endast ramverken yaws\footnote{web servern Yet Another WebServer\cite{yawsorg}} och cowboy\footnote{ramverket Cowboy\cite{cowboyorg}} i erlang och phoenix\footnote{webramverket phoenix\cite{phoenixorg}} i elixir analyserade.
+då inga rapporter gick att hitta rörande elixir så har blogginlägg använts där författarna bedöms som opartiska till fakta.
+Vid eftersökning av källor att koppla till denna rapport hänvisades det till fyra inlägg i en spalten som tar upp just detta ämne.
+Samtliga fyra inlägg i kolumnen var dock skrivna av Steve Vinoski i spalten The Functional Web och på grund av att författaren utvecklar yaws blir han partisk och hans allmäna påverkan på vad som återgivits i kolumnen kan ses som missvisande eller partisk och har därför inte innefattats i denna rapport.
 
 \subsection{ Resultat}
-\subsection*{Ramverken}
-yaws är egentligen en statisk webserver med stöd för dynamiska sidor mer än ett ramverk, och då bör man tänka på samma saker som med webserverna Apache HTTPD eller nginx i kombination språket php som att konfigurera vilka sidor och platser som får besökas och vilka platser som kräver behörighet \cite{yaws}. cowboy är mera likt en applikations server som node.js eller tomcat, som är designad med kod exekvering i åtanke, och en helt dynamisk applikation där allt generas med kod, och då bör man tänka mer på vilka variabler man tar in och kontrollera dem så att de inte innehåller skadlig kod \cite{cowboy}. phoenix är ett helhets webramverk likt ruby on rails där man vid start får en färdig web applikation och skriver kod och lägger på externa paket\footnote{Med paket så menas t.ex. \url{https://hex.pm/packages/cowboy}.
-eller \url{https://hex.pm/packages/bcrypt}}/ med kod för att ändra web applikationen till att uppfylla målen, då behöver man tänka på att inte lägga till gamla paket eller att skriva kod som öppnar säkerhets hål \cite{phoenix/ruby,phoenix/rails,phoenix}.
-\subsection*{Erlang VM\footnote{Erlang VM, Erlang BEAM virtuella maskin, kompilerar och kör erlang/elixir kod\cite{erlang}.}}
-	Erlang är snabbt och enkelt att skala up så man kan utnyttja andra säkerhetslösningar som skulle ta för lång tid i de vanligaste objektorienterade språk  så som att ta emot hela block från databasen och söka igenom dem i så nära slutanvändaren, för att bibehålla vad användare söker efter och då eliminera möjligheten att analysera fram användarens syfte och kanske identitet\cite{database}. eftersom erlang är så snabbt och skalbart så kan de klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distruberad förnekade av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre\cite{resource-safe}
-\subsection*{Allmänt}
-	man bör alltid tänka på samma saker som vid objektorienterad server utveckling, så som Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards \cite{owasp}.
-	för att ha säker kod så behövs följade punkter implementeras:
+\subsubsection*{Ramverken}
+YAWS är egentligen en statisk webserver med stöd för dynamiska sidor mer än ett ramverk, och då bör man tänka på samma saker som med webserverna Apache HTTPD eller nginx i kombination språket php som att konfigurera vilka sidor och platser som får besökas och vilka platser som kräver behörighet \cite{yaws}.
+cowboy är mera likt en applikations server som node.js eller tomcat, som är designad med kodexekvering i åtanke, och en helt dynamisk applikation där allt generas med kod, och då bör man tänka mer på vilka variabler man tar in och kontrollera dem så att de inte innehåller skadlig kod \cite{cowboy}.
+phoenix är ett helhets webramverk likt ruby on rails där man vid start får en färdig web applikation och skriver kod och lägger på externa paket\footnote{Med paket så menas t.ex.
+\url{https://hex.pm/packages/cowboy}.
+Eller \url{https://hex.pm/packages/bcrypt}} med kod för att ändra web applikationen till att uppfylla målen, då behöver man tänka på att inte lägga till gamla paket eller att skriva kod som öppnar säkerhets hål \cite{phoenix/ruby,phoenix/rails,phoenix}.
+\subsubsection*{Erlang VM\footnote{Erlang VM, Erlang BEAM virtuella maskin, kompilerar och kör erlang/elixir kod\cite{erlang}.}}
+	Erlang är snabbt och enkelt att skala up så man kan utnyttja andra säkerhetslösningar som skulle ta för lång tid i de vanligaste objektorienterade språk  så som att ta emot hela block från databasen och söka igenom dem i så nära slutanvändaren, för att bibehålla vad användare söker efter och då eliminera möjligheten att analysera fram användarens syfte och kanske identitet\cite{database}.
+eftersom erlang är så snabbt och skalbart så kan de klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distruberad förnekade av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre.\cite{resource-safe}
+\subsubsection*{Allmänt}
+	Man bör alltid tänka på samma saker som vid objektorienterad server utveckling, så som Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards.
+\cite{owasp}
+	För att ha säker kod så behövs följade punkter implementeras:
 	\begin{itemize} 
-		\item kryptera kommunikationen mellan erlang noder\footnote{Med nod så menas en Erlang VM i ett skalbart nätverk som kör samma applikation}
-		\item använd minsta möliga tillgångsroller i systemet
-		\item implementera välkända och öppna krypterings paket
-		\item använd alltid absoluta vägar till systemanrop
-		\item öppna inte eller exponera mer funktioner än nödvändigt
-		\item använd alltid senaste stabila externa paket
+		\item Kryptera kommunikationen mellan erlang.
+noder.\footnote{Med nod så menas en Erlang VM i ett skalbart nätverk som kör samma applikation}
+		\item Använd minsta möliga tillgångsroller i systemet.
+		\item Implementera välkända och öppna krypterings paket.
+		\item Använd alltid absoluta vägar till systemanrop.
+		\item Öppna inte eller exponera mer funktioner än nödvändigt.
+		\item Använd alltid senaste stabila externa paket.
 	\end{itemize}
-användandet av kod analys program kan visa säkerhetshål som utvecklare inte tänker på
+Användandet av kod analys program kan visa säkerhetshål som utvecklare inte tänker på.
 
-\subsection*{Egenskaper i Erlang att använda för att implementera IFC} 
-Kommunikation genom meddelanden - Processer i Erlang kommunicerar med varandra genom att skicka meddelanden sinsemellan, oberoende av varandras tillstånd. Meddelanden som skickas kan lätt taggas. Och det är inte heller någon data som behöver delas mellan trådar. 
-Isolering - Det enda sättet för en process att kommunicera med omgivningen är via meddelanden. I ett system utan sådan egenskap kräver IFC att varje interaktion mellan processer kontrolleras, vilket kan minska prestandan. 
-Processer är av lättvikt - Processer i Erlang kräver inte lika mycket av minnet i jämförelse med trådar i de mer konventionella programmeringsspråken. Detta är viktigt för IFC: i många applikationer måste en komponent hantera många olika användares konfidentiella data. IFC kräver då att data ska partitioneras till isolerade enheter. Att använda konventionella trådar eller processer för att hantera varje sådan enhet ger mycket arbete till ett system. Ska man bibehålla utgivarnas integritet krävs det användning av en tråd per utgivare för sändning av meddelanden. \cite{IFC}
-Bra för databaser - Erlang är bra då man ska implementera säkra databaser för konfidentiell data. \cite{database}
-
-
-
-
-	
+\subsubsection*{Egenskaper i Erlang att använda för att implementera IFC} 
+Kommunikation genom meddelanden - Processer i Erlang kommunicerar med varandra genom att skicka meddelanden sinsemellan, oberoende av varandras tillstånd.
+ Meddelanden som skickas kan lätt taggas.
+ Och det är inte heller någon data som behöver delas mellan trådar.
+Isolering - Det enda sättet för en process att kommunicera med omgivningen är via meddelanden.
+ I ett system utan sådan egenskap kräver IFC att varje interaktion mellan processer kontrolleras, vilket kan minska prestandan.
+ Processer är av lättvikt - Processer i Erlang kräver inte lika mycket av minnet i jämförelse med trådar i de mer konventionella programmeringsspråken Detta är viktigt för IFC: i många applikationer måste en komponent hantera många olika användares konfidentiella data.
+ IFC kräver då att data ska partitioneras till isolerade enheter.
+ Att använda konventionella trådar eller processer för att hantera varje sådan enhet ger mycket arbete till ett system.
+ Ska man bibehålla utgivarnas integritet krävs det användning av en tråd per utgivare för sändning av meddelanden.
+ \cite{IFC}
+Bra för databaser - Erlang är bra då man ska implementera säkra databaser för konfidentiell data.
+ \cite{database}
 
 
 \section{	Analys och diskussion}
 
 
-I vår åsikt så är erlang säkrare mot dagens hot. Om en tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om en attackerar får åtkomst till en Erlang VM nod så får attackeraren tillgång till alla noder i applikationen. Detta går att skydda genom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk. för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
+I vår åsikt så är erlang säkrare mot dagens hot.
+ Om en tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om en attackerar får åtkomst till en Erlang VM nod så får attackeraren tillgång till alla noder i applikationen.
+ Detta går att skydda genom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk.
+ för ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
+
 Erlang webservern YAWS har, som alla ramverk, haft säkerhetsbrister som har gått att utnyttja \cite{exploit} 
 	
 \section{Slutsatser}
@@ -116,36 +143,64 @@ Erlang och Elixir ramverken är lika säkra som deras motsvarigheter, det är up
 	
 \begin{thebibliography}{99}
 
-	\bibitem{erlang}"Erlang" \url{http://www.erlang.org}
+	\bibitem{erlang}"Erlang" \url{http://www.
+erlang.
+org}
 hämtad 2016-03-06
 
-\bibitem{elixir}"Elixir" \url{http://elixir-lang.org}
+\bibitem{elixir}"Elixir" \url{http://elixir-lang.
+org}
 hämtad 2016-03-06
 
-\bibitem{IFC} CBCU Eastern Cancer Registry National Health Service, Computer Laboratory University of Cambridge, Department of Computing Imperial College London, {\em “Enforcing User Privacy in Web Applications using Erlang”}, \url{http://w2spconf.com/2010/papers/p09.pdf} Publicerad 2010-05-01. Hämtad 2016-03-02.
+\bibitem{IFC} CBCU Eastern Cancer Registry National Health Service, Computer Laboratory University of Cambridge, Department of Computing Imperial College London, {\em “Enforcing User Privacy in Web Applications using Erlang”}, \url{http://w2spconf.
+com/2010/papers/p09.
+pdf} Publicerad 2010-05-01.
+ Hämtad 2016-03-02.
+
 
 \bibitem{101} {\em Erlang Security 101} by E D Williams, An NCC Group Publication
 
 
-\bibitem{resource-safe}David Teller Fac. des Sci., Lab. d''Inf. Fondamentale d''Orleans, Univ. d''Orleans, Bourges {\em “Towards a resource-safe Erlang”} ISBN 978-0-9785699-1-4 Publicerad 2007-05-25, Hämtad 2016-03-06			
+\bibitem{resource-safe}David Teller Fac.
+ des Sci.
+, Lab.
+ d''Inf.
+ Fondamentale d''Orleans, Univ.
+ d''Orleans, Bourges {\em “Towards a resource-safe Erlang”} ISBN 978-0-9785699-1-4 Publicerad 2007-05-25, Hämtad 2016-03-06			
 					
-\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.tu-berlin.de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.kammuller@gmail.com, {\em “Enhancing Privacy Implementations of Database Enquiries”}, ISBN 978-1-4244-3839-6 Publicerad 2009-05-24, Hämtad 2016-03-06
+\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.
+tu-berlin.
+de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.
+kammuller@gmail.
+com, {\em “Enhancing Privacy Implementations of Database Enquiries”}, ISBN 978-1-4244-3839-6 Publicerad 2009-05-24, Hämtad 2016-03-06
 
 
-\bibitem{yaws} {\em “Building Web Applications with Erlang by Zachary Kessin (O’Reilly)”}. Copyright 2012 Zachary Kessin, 978-1-449-30996-1.
-\url{https://www.safaribooksonline.com/u/001o000000lifiuAAA/}
+\bibitem{yaws} {\em “Building Web Applications with Erlang by Zachary Kessin (O’Reilly)”}.
+ Copyright 2012 Zachary Kessin, 978-1-449-30996-1.
 
-\bibitem{phoenix/rails} Szymon Boniecki "Elixir blog in 15 minutes using Phoenix framework" \url{http://codetunes.com/2015/phoenix-blog/}, Jakub Cieślar, publicerad 2015-08-13,
+\url{https://www.
+safaribooksonline.
+com/u/001o000000lifiuAAA/}
+
+\bibitem{phoenix/rails} Szymon Boniecki "Elixir blog in 15 minutes using Phoenix framework" \url{http://codetunes.
+com/2015/phoenix-blog/}, Jakub Cieślar, publicerad 2015-08-13,
 hämtad 2016-03-06
 
-\bibitem{cowboy}Riza Fahmi och Augie De Blieck Jr. "Cowboy Tutorial " \url{http://elixirdose.com/post/elixirdose_flatfileblog }
+\bibitem{cowboy}Riza Fahmi och Augie De Blieck Jr.
+ "Cowboy Tutorial " \url{http://elixirdose.
+com/post/elixirdose_flatfileblog }
 hämtad 2016-03-06
 
-\bibitem{phoenix}Riza Fahmi och Augie De Blieck Jr.  "Phoenix Flying High" \url{http://elixirdose.com/post/phoenix_part_5_deploying_phoenix_the_final_part} 
+\bibitem{phoenix}Riza Fahmi och Augie De Blieck Jr.
+  "Phoenix Flying High" \url{http://elixirdose.
+com/post/phoenix_part_5_deploying_phoenix_the_final_part} 
 hämtad 2016-03-06
 
 %not using
-\bibitem{phoenix/ruby} Lau Taarnskov "Elixir - The next big language for the web"\url{http://www.creativedeletion.com/2015/04/19/elixir_next_language.html}
+\bibitem{phoenix/ruby} Lau Taarnskov "Elixir - The next big language for the web"\url{http://www.
+creativedeletion.
+com/2015/04/19/elixir_next_language.
+html}
 publicerad  2015-04-19,
 hämtad 2016-03-06
 
