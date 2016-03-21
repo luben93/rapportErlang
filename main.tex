@@ -1,7 +1,6 @@
 %secret comment
 
-\title{S{\"a}kerhet p{\aa} webramverk i Erlang och Elixir
-}
+\title{S{\"a}kerhet p{\aa} webramverk i Erlang och Elixir}
 \author{
 		Lucas Persson\\  
 		\href{mailto:lucaspe@kth.se}{lucaspe@kth.se} 
@@ -27,27 +26,34 @@
 	 	 	 	 	
 	
 \section*{Sammanfattning}
-Frågan var vilken säkerhet som är implementerad i de olika webbramverken för elixir/erlang och vilka egna säkerhetsåtgärder som bör vidtas.
+%Förklarar problemet, varför det är ett problem, resultat och slutsats. Jag tycker inte att ”svaret” som ges i sammanfattningen och slutsatsen hänger ihop med frågan som presenteras i sammanfattningen och introduktionen.
+%Elixir och Erlang, VM? siffran med förklaring ska komma redan från början. 
+Frågan var vilken säkerhet som är implementerad i de olika webbramverken för Erlang/Elixir samt vilka egna säkerhetsåtgärder som bör vidtas.
 
 Erlangs VM är en stabil och flertrådad VM men har inte designats med säkerhet i åtanke, Erlang VM innehåller specifika säkerhetshål som går att täta till.
 Undersökningen resulterade i insikten att Erlang och Elixir är lika säkra och att även stabiliteten gör dem säkrare.
-	
+% eralng och elexir är lika säkra? det ska väl inte stå eftersm ni jämför de mot alla andra? samt att den meningen är lite konstig 	
 \subsection*{Nyckelord}
 Informationsflödeskontroll, Erlang, Elixir, Säkerhet, Webramverk
 	
 \section{Inledning}
+%Problemställningen som ska besvaras eller diskuteras i rapporten ingår alltid i introduktionen, tillsammans med motivering till varför detta är ett problem. Ibland, speciellt i längre inledningar, låter man problemställningen få en egen underrubrik i inledningen. Det är viktigt att problemformuleringen är tydlig, fokuserad och har tillräcklig komplexitet för att arbetet ska vara av värde (se t.ex. skrivguiden.se för mer information om detta).
 
 Frågeställningen var hur mycket säkerhet som är implementerad i de olika webbramverken\footnote{fördefinerad kombination med externa paket skrivna att passa med varandra som slutligen underlättar för utvecklare av webapplikationer} för elixir/erlang\footnote{språket Erlang/OTP\cite{erlang}}\footnote{dialekten av Erlang\cite{elixir}} och vilka säkerhetsåtgärder som bör vidtas.
-
-Detta är viktigt med hänseende på all känslig information som delges då man använder sig av webbtjänster.\\
+Detta är viktigt med hänseende på all känslig information som delges då man använder sig av webbtjänster.
+%%Inledning bör innehålla en djupare förklaring av exakt vilka problemen var.
+%flytta upp förklaringarna på erlang och elixir
 
 
 
  \section{Bakgrund och teori}
+%I detta kapitel presenteras bakgrunden till problemställningen. Här redovisas teori och tidigare arbeten som är väsentliga för den fortsatta behandlingen. Det kan göras i form av en genomgång av littertur och forskningsresultat. I den löpande texten hänvisas till de källor som används (se kapitlet nedan om källförteckning). 
 
+%\subsection*{Bakgrund}
+%TODO dela upp i relevanta kapitel här
 
 Sociala medier på webben hanterar personlig data från ett stort antal aktiva användare.
-Dessa webbapplikationer måste följa en mängd olika krav på integritet, och samtidigt uppnå skalabilitet och hög prestanda.
+Dessa webbapplikationer måste följa en mängd olika krav på integritet, samtidigt uppnå skalabilitet och hög prestanda.
 Att implementera begränsningar på flödet av data under användningen av dessa tjänster för att följa en viss integritetspolicy är en utmaning eftersom enskilda komponenter bearbetar data som tillhör många olika användare.
 I en simpel blogg där flera användare skriver till en och samma anonyma diskussionstråd, kan det vara lämpligt att hindra var och en från att se den andres identitet.
 I de bästa av världar, borde alla webbapplikationer implementera integritetspolicys genom att isolera data som tillhör olika användare.\\
@@ -75,9 +81,23 @@ Varför Erlang? Erlang är ett procedurellt programmeringsspråk vars modell byg
 \footnote{ sid 3\cite{IFC}}
 
 \section{Metod och 	resultat }	
+%Om litteraturstudier används som metod för att besvara problemställningen eller om rapporten är en kartläggning av ett område (survey), redogör kapitlet ”Resultat” för vad som kommit fram under litteraturstudien. Det är viktigt att de fakta som presenteras är relevanta för just den problemställning som behandlas. Om arbetet går ut på att jämföra olika sätt att lösa ett problem eller att jämföra olika teknologier, är det viktigt att samma aspekter tas upp för alla de möjliga lösningar eller teknologier som presenteras. Själva analysen av de fakta som presenteras, t.ex. jämförelsen av de olika alternativ som presenteras hör inte hemma här utan presenteras i kapitlet ”Analys och diskussion”.
+%Det är viktigt att kunna hänvisa till verifierbara och trovärdiga källor här. Icke-triviala påståenden ska alltid motiveras med en referens till källan alternativt med vettig argumentation.
+
+
+
+%sammanfatta kapitlet vad kommer tas upp här 
+I metoden förklaras hur resultat har uppnåtts, 
+%Och i Resultatet presenteras litteraturen
+%%eller ???????????????????????????????????????????
+även i Resultatet presenteras det som anaylseras senare 
+
+
 
 \subsection{ Metod}
-Den valda metoden har varit litteraturstudier och källorna har funnits via databaserna IEEE Xplore  (ieeexplore.ieee.org),  som analyserat olika rapporter och blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter som behövs ta hänsyn till.
+%Ramverker, Erlang VM och Allmänt anser vi passar bättre in under bakgrund eftersom dessa inte är några resultat. Resultat bör inte tillför någon nya fakta eller på̊ståenden.
+
+Den valda metoden har varit litteraturstudier och källorna har funnits via databaserna IEEE Xplore  \footnote{ \url{ieeexplore.ieee.org}},  som analyserat olika rapporter och blogginlägg om webutveckling i erlang och i elixir, med hjälp av olika ramverk och vilka säkerhets aspekter som behövs ta hänsyn till.
 För att rapporten ska hålla sig saklig är endast ramverken yaws\footnote{web servern Yet Another WebServer\cite{yawsorg}} och cowboy\footnote{ramverket Cowboy\cite{cowboyorg}} i erlang och phoenix\footnote{webramverket phoenix\cite{phoenixorg}} i elixir analyserade.
 Då inga rapporter gick att hitta rörande elixir så har blogginlägg använts där författarna bedöms som opartiska till fakta.
 Vid eftersökning av källor att koppla till denna rapport hänvisades det till fyra inlägg i en spalten som tar upp just detta ämne.
@@ -85,7 +105,7 @@ Samtliga fyra inlägg i kolumnen var dock skrivna av Steve Vinoski i spalten The
 
 \subsection{ Resultat}
 \subsubsection*{Ramverken}
-YAWS är egentligen en statisk webserver med stöd för dynamiska sidor mer än ett ramverk, och då bör man tänka på samma saker som med webserverna Apache HTTPD eller nginx i kombination språket php som att konfigurera vilka sidor och platser som får besökas och vilka platser som kräver behörighet \cite{yaws}.
+YAWS är egentligen en statisk webserver med stöd för dynamiska sidor mer än ett ramverk, och då bör man tänka på samma saker som med webservrarna Apache HTTPD eller nginx i kombination språket php som att konfigurera vilka sidor och platser som får besökas och vilka platser som kräver behörighet \cite{yaws}.
 Cowboy är mera likt en applikations server som node.js eller tomcat, som är designad med kodexekvering i åtanke, och en helt dynamisk applikation där allt generas med kod, och då bör man tänka mer på vilka variabler man tar in och kontrollera dem så att de inte innehåller skadlig kod \cite{cowboy}.
 Phoenix är ett helhets webramverk likt ruby on rails där man vid start får en färdig web applikation och skriver kod och lägger på externa paket\footnote{Med paket så menas t.ex.
 \url{https://hex.pm/packages/cowboy}.
@@ -95,9 +115,9 @@ Eller \url{https://hex.pm/packages/bcrypt}} med kod för att ändra web applikat
 Eftersom erlang är så snabbt och skalbart så kan de klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distruberad förnekade av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre.\cite{resource-safe}
 \subsubsection*{Allmänt}
 	Man bör alltid tänka på samma saker som vid objektorienterad server utveckling, så som Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards.
-\cite{owasp}
-	För att ha säker kod så behövs följade punkter implementeras:
-	\begin{itemize} 
+\cite{owasp}	För att ha säker kod så behövs följade punkter implementeras:
+
+\begin{itemize} 
 		\item Kryptera kommunikationen mellan erlang noder. \footnote{Med nod så menas en Erlang VM i ett skalbart nätverk som kör samma applikation}
 		\item Använd minsta möliga tillgångsroller i systemet.
 		\item Implementera välkända och öppna krypterings paket.
@@ -123,16 +143,32 @@ Bra för databaser - Erlang är bra då man ska implementera säkra databaser f�
 
 
 \section{	Analys och diskussion}
+%Under denna rubrik analyseras de resultat som tagits fram i föregående kapitel och dina tolkningar av resultatet presenteras. Om litteraturstudier används som metod för att besvara problemställningen eller om rapporten är en kartläggning av ett område (survey), är det i detta kapitel du gör själva jämförelsen eller analysen av de fakta som presenterats i kapitlet ”Resultat”.
+%När resultaten analyseras bör följande behandlas:
+%Metoden: vilka fördelar och nackdelar har denna?
+%Vad innebär resultaten som presenterats tidigare? Vilka eventuella tendenser ser du och hur ska dessa tolkas?
+%Vilka konsekvenser får resultaten?
+%Förmågan att analysera, bedöma, bemöta, förbättra och producera argument är själva kärnan i all akademisk kunskapsbildning. Det är därför viktigt att ärligt och tydligt redovisa sin argumentation. Om vissa delar i problemställningen inte kan besvaras ska även detta faktum analyseras och diskuteras. Eventuella konsekvenser för samhället ur ekonomisk, social, etisk och miljömässig synvinkel kan diskuteras här.
 
 
+\subsection*{Analys}
 I vår åsikt så är erlang säkrare mot dagens hot.
  Om en tar samma nödvändiga steg som för andra plattformar och språk, då det viktigaste är att hantera Erlang VM säkert för att om en attackerar får åtkomst till en Erlang VM nod så får attackeraren tillgång till alla noder i applikationen.
  Detta går att skydda genom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till från internet, och sedan endast öppna en port för nod kommunikation mot ett privat nätverk.
  För ett av de vanligaste hoten idag är DDOS vilket erlang VM tillsammans med automatisk uppskalning är bättre utrustad än de flesta att hantera.
 
 Erlang webservern YAWS har, som alla ramverk, haft säkerhetsbrister som har gått att utnyttja \cite{exploit} 
-	
+	\subsection*{Diskussion}
+    % I detta kapitel får vi känsla av att Erlang är bättre. Medan ni sedan i slutsatser skriver att båda är lika säkra.
+    %%TODO SKIRV MER HÄR !!!!!!!!!!!!!!
+
+    
+    
 \section{Slutsatser}
+%Här beskrivs, kortfattat, de väsentligaste resultaten som framkommit, relaterat till problemformulering och målsättning. Slutsatsen blickat också framåt genom att ge förslag på nya frågeställningar som framkommit som ett resultat av arbetet, förslag till fortsatt arbete och utveckling av metoder. 
+
+    %%TODO SKIRV MER HÄR !!!!!!!!!!!!!!
+
 
 
 Erlang och Elixir ramverken är lika säkra som deras motsvarigheter, det är upp till utvecklaren att täppa till samma håll med samma principer
@@ -159,9 +195,7 @@ hämtad 2016-03-06
  Fondamentale d''Orleans, Univ.
  d''Orleans, Bourges {\em “Towards a resource-safe Erlang”} ISBN 978-0-9785699-1-4 Publicerad 2007-05-25, Hämtad 2016-03-06			
 					
-\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.
-tu-berlin.
-de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.
+\bibitem{database}Florian Kammuller Technische Universität Berlin Software Engineering Group flokam@cs.tu-berlin.de, Reiner kammuller, Universität Siegen, Fakultät fur Elektrotechnik und Informatik, reiner.
 kammuller@gmail.
 com, {\em “Enhancing Privacy Implementations of Database Enquiries”}, ISBN 978-1-4244-3839-6 Publicerad 2009-05-24, Hämtad 2016-03-06
 
