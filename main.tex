@@ -26,11 +26,13 @@
 	 	 	 	 	
 	
 \section*{Sammanfattning}
-%Förklarar problemet, varför det är ett problem, resultat och slutsats. Jag tycker inte att ”svaret” som ges i sammanfattningen och slutsatsen hänger ihop med frågan som presenteras i sammanfattningen och introduktionen.
 Frågan var vilken säkerhet som är implementerad i de olika webbramverken för Erlang/Elixir samt vilka egna säkerhetsåtgärder som bör vidtas jämfört mot andra plattformer.
+
 Om en attakerare kommer in på webservern så har den tillgång till hela applikations systemet samt all kommunikation.
+
 Erlangs Virtuella Maskin är en stabil samt flertrådad VM, men har inte designats med säkerhet i åtanke, Erlang VM innehåller specifika säkerhetshål som går att täta till.
-Undersökningen resulterade i insikten att webbramverken för Erlang och Elixir är till och med säkrare än deras motsvarigheter för objektorienterade språk.
+
+Undersökningen resulterade i insikten att webbramverken för Erlang och Elixir är till och med säkrare på vissa områden än deras motsvarigheter för objektorienterade språk.
 
 \subsection*{Nyckelord}
 Informationsflödeskontroll, Erlang, Elixir, Säkerhet, Webramverk, DDOS
@@ -61,13 +63,13 @@ I de bästa av världar, borde alla webbapplikationer implementera integritetspo
 
 Forskning om IFC\footnote{Med IFC så menas Information Flow Control eller informationsflödeskontroll} har visat att en möjlig lösning för att skydda integriteten är att kontrollera spridningen av data genom ett system.
 Med IFC spårar systemet alla spår av datat i komponenterna samt hindrar oönskade dataflöden som skulle kunna skada integriteten.
+
 Detta ger två problem:
 Dels ger det mycket overhead\footnote{indirekt överflödigt processande av data} och dels blir det svårt att förverkliga.
 Detta förhindrar IFC:n från att garantera isolering eftersom data som tillhör olika användare är blandat inom komponenten.
-Det som är fördelaktigt med Erlang/Elixir i det här sammanhanget är att IFC:s restriktioner enbart måste bli kontrollerade då meddelanden skickas mellan processer.
- \footnote{sid 1\cite{IFC}}
+Det som är fördelaktigt med Erlang/Elixir i det här sammanhanget är att IFC:s restriktioner enbart måste bli kontrollerade då meddelanden skickas mellan processer \footnote{sid 1\cite{IFC}}.
 \subsubsection*{Allmänt}
-	För att skriva en säker Erlang/Elixir webserver krävs samma säkerhetsprinciper som vid objektorienterad serverutveckling, skydd mot Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards.\cite{owasp}	
+	För att skriva en säker Erlang/Elixir webserver krävs samma säkerhetsprinciper som vid objektorienterad serverutveckling, skydd mot Injection, Broken Authentication and Session Management, Cross-Site Scripting (XSS), Insecure Direct Object References, Security Misconfiguration, Sensitive Data Exposure, Missing Function Level Access Control, Cross-Site Request Forgery (CSRF), Using Components with Known Vulnerabilities, Unvalidated Redirects and Forwards\cite{owasp}.
 
 
 
@@ -75,14 +77,14 @@ Det som är fördelaktigt med Erlang/Elixir i det här sammanhanget är att IFC:
 För att ha säker kod så behövs följande punkter implementeras:
 
 \begin{itemize} 
-		\item Kryptera kommunikationen mellan noder.\footnotemark
+		\item Kryptera kommunikationen mellan noder\footnotemark.
 		\item Noder ska ha minimalt med privilegier.
 		\item Implementera välkända och öppna krypterings paket.
 		\item Använd alltid absoluta vägar till systemanrop.
 		\item Öppna inte eller exponera mer funktioner än nödvändigt.
 		\item Använd alltid de senaste stabila externa paketen.
 	\end{itemize}
-Dessutom kan användandet av kodanalysprogram visa säkerhetshål som en utvecklare inte tänker på.\cite{101}
+Dessutom kan användandet av kodanalysprogram visa säkerhetshål som en utvecklare inte tänker på\cite{101}.
 \end{minipage}
 \footnotetext{Med nod i denna rapport så menas en Erlang VM i ett skalbart nätverk som kör samma applikation samt är sammankopplade med andra noder}
 
@@ -98,8 +100,8 @@ Detta försäkrar att utgivaren kan bibehålla kontrollen över vilka som tar em
 Godkända prenumeranter ska inte bli exponerade inför någon annan utgivare eller prenumerant.
 Detta innebär att varje prenumeration görs privat samt att ingen annan användare av systemet, förutom den utgivare som godkänner prenumeranten, kan se vem som prenumererar.
 
-Förfrågningar om prenumeration från eventuella prenumeranter ska enbart levereras till den utgivare som förfrågningen riktar sig till.
-\footnote{sid 2\cite{IFC}}
+Förfrågningar om prenumeration från eventuella prenumeranter ska enbart levereras till den utgivare som förfrågningen riktar sig till
+\footnote{sid 2\cite{IFC}}.
 
 
 
@@ -123,12 +125,12 @@ Samtliga fyra inlägg i spalten The Functional Web var dock skrivna av Steve Vin
 \subsubsection*{Erlang VM}
 	Erlang är snabbt samt enkelt att skala upp. Så man kan utnyttja andra säkerhetslösningar som skulle ta för lång tid i de vanligaste objektorienterade språk såsom att ta emot hela block från databasen och söka igenom dem nära slutanvändaren. Detta för att bibehålla vad användaren söker efter samt då eliminera möjligheten att analysera fram användarens syfte och kanske identitet\cite{database}.
 
-Eftersom Erlang är så snabbt och skalbart kan det klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distribuerad förnekande av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre.\cite{resource-safe}
+Eftersom Erlang är så snabbt och skalbart kan det klara av DDOS\footnote{Med DDOS så menas Distributed Denial-of-Service attack, på svenska distribuerad förnekande av tjänst, vilken innebär att ett nätverk av attakerare skickar mer trafik till applikationen än vad applikationen klarar av att hantera} attacker mycket bättre/längre\cite{resource-safe}.
 
 \subsubsection*{Ramverken}
-YAWS är egentligen mer en statisk webserver med stöd för dynamiska sidor mer än ett ramverk. Hänsyn borde dessutom tas till samma saker som med webservrarna Apache HTTPD eller nginx i kombination med språket PHP, som att konfigurera vilka sidor och platser som får besökas samt vilka platser som kräver behörighet \cite{yaws}.
+YAWS är egentligen mer en statisk webserver med stöd för dynamiska sidor mer än ett ramverk. Hänsyn borde dessutom tas till samma saker som med webservrarna Apache HTTP Server eller nginx i kombination med språket PHP, som att konfigurera vilka sidor och platser som får besökas samt vilka platser som kräver behörighet \cite{yaws}.
 
-Cowboy är mera likt en applikationsserver som node.js eller tomcat, som är designad med kodexekvering i åtanke. Det är en helt dynamisk applikation där allt generas med kod. Variablerna som tas emot behöver kontrolleras så att dessa inte innehåller skadlig kod
+Cowboy är mera likt en applikationsserver som Node.js eller Tomcat, som är designad med kodexekvering i åtanke. Det är en helt dynamisk applikation där allt generas med kod. Variablerna som tas emot behöver kontrolleras så att dessa inte innehåller skadlig kod
 %Hänsyn borde tas på vilka variabler som tas emot, som att kontrollera dessa, så att de inte innehåller skadlig kod 
 \cite{cowboy}.
 
@@ -140,16 +142,12 @@ Phoenix är ett helhetswebramverk likt Ruby on Rails, vid start får man en fär
 
 
 \subsubsection*{Integritet i Erlang } 
-Kommunikation genom meddelanden - Processer i Erlang kommunicerar med varandra genom att skicka meddelanden sinsemellan oberoende av varandras tillstånd.
- Meddelanden som skickas kan lätt taggas, vilket förtydligar vilken process som ska ta emot det.
- Det är inte heller någon data som behöver delas mellan trådar, vilket spar minne.
+Processer i Erlang kommunicerar med varandra genom att skicka meddelanden sinsemellan oberoende av varandras tillstånd. Meddelanden som skickas kan lätt taggas, vilket förtydligar vilken process som ska ta emot det. Det är inte heller någon data som behöver delas mellan processerna, vilket sparar minne.
 
-Isolering - Det enda sättet för en process att kommunicera med omgivningen är via meddelanden.
- I ett system utan sådan egenskap kräver IFC att varje interaktion mellan processer kontrolleras, vilket kan minska prestandan.
+Det enda sättet för en process att kommunicera med omgivningen är via meddelanden, vilket ger isolering.  I ett system utan sådana egenskaper kräver IFC att varje interaktion mellan processer kontrolleras, vilket kan minska prestandan.
  
- Processer är av lättvikt - Processer i Erlang kräver inte lika mycket av minnet i jämförelse med trådar i de mer konventionella programmeringsspråken. Detta är viktigt för IFC: i många applikationer måste en komponent hantera många olika användares konfidentiella data. IFC kräver då att data ska partitioneras till isolerade enheter.
- Att använda konventionella trådar eller processer för att hantera varje sådan enhet ger mycket arbete till ett system. Ska man exempelvis bibehålla utgivarnas integritet krävs det användning av en tråd per utgivare för sändning av meddelanden.
- \cite{IFC}
+Processer i Erlang kräver inte heller lika mycket av minnet i jämförelse med trådar eller processer i de mer konventionella programmeringsspråken. Detta är viktigt för IFC: I många applikationer måste en komponent hantera många olika användares konfidentiella data. IFC kräver då att data ska partitioneras till isolerade enheter. Att använda konventionella trådar eller processer för att hantera varje sådan enhet ger mycket arbete till ett system. Ska man exempelvis bibehålla utgivarnas integritet krävs det användning av en tråd per utgivare för sändning av meddelanden
+ \cite{IFC}.
 
 
 
@@ -162,15 +160,15 @@ Enligt vår åsikt är dessa webbramverk mer passande för webbapplikationer än
 
 Om man tog samma nödvändiga steg som för andra plattformar och språk, skulle det viktigaste vara att hantera Erlang VM säkert. Skulle en attackerare få åtkomst till en Erlang VM nod skulle denne få tillgång till alla noder i applikationen.
 Detta går att hindra genom att använda en proxy \cite{101} server där endast port 80 och port 443 går att ansluta till internet, för att sedan endast öppna en port för nodkommunikation mot ett virtuellt privat nätverk där alla noder ligger.
- Eftersom att ett av de vanligaste hoten idag är DDOS, vilket Erlang VM tillsammans med cloud computing är bättre utrustad än de flesta att hantera.
+ Eftersom att ett av de vanligaste hoten idag är DDOS, vilket Erlang VM tillsammans med cloud computing\footnote{virtuella datorer som kan provisioneras tillfälligt vid behov och då skala upp applikationens prestanda} är bättre utrustad än de flesta att hantera.
 
-Alla ramverk har säkerhetsbrister. Exempelvis Erlang-webservern YAWS vars svagheter har kunnat utnyttjas. \cite{exploit} 
+Alla ramverk har säkerhetsbrister. Exempelvis Erlang-webservern YAWS vars svagheter har kunnat utnyttjas\cite{exploit}. 
 	\subsection{Diskussion}
 
 Elixir och Phoenix är relativt nya tekniker\footnote{båda var i version 1 vid skrivandet av rapporten}, de kan växa samt bli väldigt relevanta i framtiden\cite{phoenix/ruby}. Därför är det väldigt fördelaktigt att dessa är säkra från början.
 
-Erlang är bra då man ska implementera säkra databaser för konfidentiell data.
- \cite{database}
+Erlang är bra då man ska implementera säkra databaser för konfidentiell data
+ \cite{database}. Detta genom att både klientens och serverns processer är isolerade och kommunicarar enbart med varandra med meddelanden utan att någon data behöver delas med andra utomstående processer.
     
     
 \section{Slutsatser}
@@ -178,7 +176,7 @@ Erlang är bra då man ska implementera säkra databaser för konfidentiell data
 
 Varför Erlang? Erlang har ett procedurellt programmeringsspråk vars modell bygger på att ingen data delas mellan processer, vilket i sin tur gör att den passar för IFC.
 
-Erlang och Elixir-ramverken var säkrare än deras motsvarigheter i Objektorienterade språk. 
+Erlang och Elixir-ramverken var lika säkert än deras motsvarigheter i Objektorienterade språk. 
 Det är upp till utvecklaren att täppa till samma säkerhetshål med samma principer. 
 Det som ger Erlang och Elixir en fördel är deras lättviktiga processer, anpassning till cloud computing samt skalbarheten. Eftersom att Erlangs noder  
 %Detta gör i sin tur att de 
